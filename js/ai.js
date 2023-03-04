@@ -55,7 +55,7 @@ const displayAI = (tools, dataLimit) => {
             </div>
 
             <div class="bg-body-secondary rounded-circle">
-            <button class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fa-solid fa-arrow-right text-danger"></i></button>
+            <button onclick=loadDetails('${tool.id}') class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fa-solid fa-arrow-right text-danger"></i></button>
             </div>
 
             
@@ -79,4 +79,31 @@ const displayAI = (tools, dataLimit) => {
 
     })
 }
+
+
+// Modal section
+
+const loadDetails = async(id) =>{
+    const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`
+    const res = await fetch(url)
+    const data = await res.json()
+    displayLoadDetails(data.data);
+}
+
+const displayLoadDetails = (data) =>{
+    console.log(data);
+    console.log(data.input_output_examples[0].input)
+    const modalRightDiv = document.getElementById('modal-right-side')
+    modalRightDiv.innerHTML = `
+    <div class="card  p-4">
+    <img src="${data.image_link[0]
+    }" class="card-img-top" alt="...">
+    <div class="card-body text-center">
+      <h5 class="card-title">${data.input_output_examples[0].input? data.input_output_examples[0].input: 'Can you give any example?'}</h5>
+      <p class="card-text">${data.input_output_examples[0].output?data.input_output_examples[0].output: 'NO! Not yet! Take a break'}</p>
+    </div>
+  </div>
+    `
+}
+loadDetails()
 loadAi(6);
