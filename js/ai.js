@@ -157,7 +157,7 @@ const displayLoadDetails = (data) =>{
             <div class="btn btn-danger mt-1 me-1  position-absolute top-0 end-0" id="btn-show-all">${data.accuracy? data.accuracy.score * 100: ''}% accuracy</div>
         </div>
         <div class="card-body text-center">
-            <h5 class="card-title">${Object.keys(data.input_output_examples).length !== 0? data.input_output_examples[0].input: 'Can you give any example?'}</h5>
+            <h5 class="card-title">${data.input_output_examples? data.input_output_examples[0].input: 'Can you give any example?'}</h5>
             <p class="card-text">${data.input_output_examples ? data.input_output_examples[0].output : 'NO! Not yet! Take a break'}</p>
         </div>
   </div>
