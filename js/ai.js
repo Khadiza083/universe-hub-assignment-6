@@ -1,19 +1,19 @@
-const loadAi = async () => {
+const loadAi = async (dataLimit) => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
     const res = await fetch(url);
     const data = await res.json()
-    displayAI(data.data.tools);
+    displayAI(data.data.tools, dataLimit);
 }
 
 // function for display AI tools 
-const displayAI = (tools) => {
+const displayAI = (tools, dataLimit) => {
     console.log(tools);
     const toolsSection = document.getElementById('tools-section');
-    // toolsSection.textContent = ''
+    toolsSection.textContent = ''
     // tool slice
     const showAll = document.getElementById('show-all');
 
-    if(tools.length>6){
+    if(dataLimit && tools.length>6){
         tools = tools.slice(0, 6)
         showAll.classList.remove('d-none')
     }
@@ -61,4 +61,4 @@ const displayAI = (tools) => {
         loadAi();
     })
 }
-loadAi();
+loadAi(6);
