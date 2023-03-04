@@ -101,22 +101,22 @@ const displayLoadDetails = (data) =>{
     modalLeftDiv.innerHTML = `
     <div class="card p-3 h-100 bg-warning-subtle mx-2">
         <div class="">
-            <h6 class=""><b>${data.description}</b></h6>
+            <h6 class=""><b>${data.description? data.description: ''}</b></h6>
             <div id="pricing" class="d-flex gap-2 row" >
                 <div class="bg-light-subtle rounded-4 w-25 col">
                     <div class="py-4 px-1" >
-                    <h6 class="text-center text-success">${data.pricing[0].price} ${data.pricing[0].plan}</h6>
+                    <h6 class="text-center text-success">${data.pricing? data.pricing[0].price: 'Free of Cost'} ${data.pricing? data.pricing[0].plan: ''}</h6>
                     </div>
                 </div>
                 <div class="bg-light-subtle rounded-4 w-25 col">
                     <div class="py-4 px-1">
-                    <h6 class="text-center text-warning">${data.pricing[1].price} ${data.pricing[1].plan}</h6>
+                    <h6 class="text-center text-warning">${data.pricing? data.pricing[1].price: 'Free of Cost'} ${data.pricing? data.pricing[1].plan: ''}</h6>
 
                     </div>
                 </div>
                 <div class="bg-light-subtle rounded-4 w-26 col">
                     <div class="py-2 px-2">
-                    <h6 class="text-center text-danger" >${data.pricing[2].price} ${data.pricing[2].plan}</h6>
+                    <h6 class="text-center text-danger" >${data.pricing? data.pricing[2].price: 'Free of Cost'} ${data.pricing? data.pricing[2].plan: ''}</h6>
                     </div>
                 </div>
             <div class="row">
@@ -125,14 +125,14 @@ const displayLoadDetails = (data) =>{
                     <p class="card-text">
                     <ul>
                     ${featureDetail.map(feature => `<li>${feature}</li>`).join("")}
-                </ul>
+                    </ul>
                     </p>
                 </div>
                 <div class="col">
                     <h5>Integrations</h5>
                     <p class="card-text">
                         <ul>
-                            ${data.integrations.map(integration => `<li>${integration}</li>`).join("")}
+                            ${data.integrations? data.integrations.map(integration => `<li>${integration}</li>`).join("") : 'No data found'}
                         </ul>
 
                     </p>
@@ -146,24 +146,27 @@ const displayLoadDetails = (data) =>{
     `
 
 
+    
     // modal right side
     const modalRightDiv = document.getElementById('modal-right-side')
     modalRightDiv.innerHTML = `
     <div class="card  p-4">
 
         <div class="position-relative">
-            <img src="${data.image_link[0]}" class="card-img-top" alt="...">
-            <div class="btn btn-danger mt-1 me-1  position-absolute top-0 end-0" id="btn-show-all">${data.accuracy.score * 100}% accuracy</div>
+            <img class="img-fluid" src="${data.image_link?data.image_link[0]: ''}" class="card-img-top" alt="...">
+            <div class="btn btn-danger mt-1 me-1  position-absolute top-0 end-0" id="btn-show-all">${data.accuracy? data.accuracy.score * 100: ''}% accuracy</div>
         </div>
         <div class="card-body text-center">
-            <h5 class="card-title">${data.input_output_examples!== 'false'? data.input_output_examples[0].input: 'Can you give any example?'}</h5>
-            <p class="card-text">${data.input_output_examples!== 'false'?data.input_output_examples[0].output: 'NO! Not yet! Take a break'}</p>
+            <h5 class="card-title">${Object.keys(data.input_output_examples).length !== 0? data.input_output_examples[0].input: 'Can you give any example?'}</h5>
+            <p class="card-text">${data.input_output_examples ? data.input_output_examples[0].output : 'NO! Not yet! Take a break'}</p>
         </div>
   </div>
     `
 }
+// feature details for modal
 const featuresDetails = (features) =>{
     let featureArr = []
+    
     for(const key in features){
       
         featureArr[key] = features[key].feature_name;
