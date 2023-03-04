@@ -5,6 +5,16 @@ const loadAi = async (dataLimit) => {
     displayAI(data.data.tools, dataLimit);
 }
 
+// loader
+const toggleSpinner = (isLoading) => {
+    const loader = document.getElementById('loader')
+    if (isLoading) {
+        loader.classList.remove('d-none');
+    }
+    else {
+        loader.classList.add('d-none');
+    }
+}
 // function for display AI tools 
 const displayAI = (tools, dataLimit) => {
     console.log(tools);
@@ -13,14 +23,14 @@ const displayAI = (tools, dataLimit) => {
     // tool slice
     const showAll = document.getElementById('show-all');
 
-    if(dataLimit && tools.length>6){
+    if (dataLimit && tools.length > 6) {
         tools = tools.slice(0, 6)
         showAll.classList.remove('d-none')
     }
-    else{
+    else {
         showAll.classList.add('d-none')
     }
-    
+
     tools.forEach(tool => {
         const divTool = document.createElement('div')
         divTool.classList.add('col')
@@ -45,20 +55,28 @@ const displayAI = (tools, dataLimit) => {
             </div>
 
             <div class="bg-body-secondary rounded-circle">
-            <button class="btn "> <i class="fa-solid fa-arrow-right text-danger"></i></button>
+            <button class="btn " data-bs-toggle="modal" data-bs-target="#exampleModal"> <i class="fa-solid fa-arrow-right text-danger"></i></button>
             </div>
+
+            
             </div>
             </div>
             </div>
         `
         toolsSection.appendChild(divTool)
+        toggleSpinner(false)
     })
 
 
     // display rest tools
-
-    document.getElementById('btn-show-all').addEventListener('click', function(){
+    const restTools = () => {
+        toggleSpinner(true);
         loadAi();
+    }
+
+    document.getElementById('btn-show-all').addEventListener('click', function () {
+        restTools();
+
     })
 }
 loadAi(6);
