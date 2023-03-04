@@ -150,12 +150,15 @@ const displayLoadDetails = (data) =>{
     const modalRightDiv = document.getElementById('modal-right-side')
     modalRightDiv.innerHTML = `
     <div class="card  p-4">
-    <img src="${data.image_link[0]
-    }" class="card-img-top" alt="...">
-    <div class="card-body text-center">
-      <h5 class="card-title">${data.input_output_examples[0].input? data.input_output_examples[0].input: 'Can you give any example?'}</h5>
-      <p class="card-text">${data.input_output_examples[0].output?data.input_output_examples[0].output: 'NO! Not yet! Take a break'}</p>
-    </div>
+
+        <div class="position-relative">
+            <img src="${data.image_link[0]}" class="card-img-top" alt="...">
+            <div class="btn btn-danger mt-1 me-1  position-absolute top-0 end-0" id="btn-show-all">${data.accuracy.score * 100}% accuracy</div>
+        </div>
+        <div class="card-body text-center">
+            <h5 class="card-title">${data.input_output_examples!== 'false'? data.input_output_examples[0].input: 'Can you give any example?'}</h5>
+            <p class="card-text">${data.input_output_examples!== 'false'?data.input_output_examples[0].output: 'NO! Not yet! Take a break'}</p>
+        </div>
   </div>
     `
 }
@@ -167,5 +170,5 @@ const featuresDetails = (features) =>{
     }
     return (featureArr);
 }
-loadDetails()
+// loadDetails()
 loadAi(6);
